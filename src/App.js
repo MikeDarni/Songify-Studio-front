@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from "./components/layout/Layout";
+import { Route, Switch } from "react-router-dom";
+import AllSongsPage from "./pages/AllSongs";
+import NewSongPage from "./pages/NewSong";
+import SongUserMenuPage from "./pages/SongUserMenu";
+import ConvertSongMenuPage from "./pages/ConvertSongMenu";
+
+import "./input.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Switch>
+        <Route path="/new-song">
+          <NewSongPage />
+        </Route>
+        <Route path="/song-convert">
+          <ConvertSongMenuPage />
+        </Route>
+        <Route path="/song-studio">
+          <SongUserMenuPage />
+        </Route>
+        <Route path="/">
+          <AllSongsPage />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 

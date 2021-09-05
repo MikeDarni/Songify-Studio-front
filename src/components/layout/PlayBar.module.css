@@ -1,0 +1,72 @@
+.column {
+  width: 65%;
+  height: 15%;
+  padding: 20px;
+  background: #474646;
+  text-transform: capitalize;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  bottom: 0;
+  position: absolute;
+  left: 15%;
+}
+
+.play {
+  padding: 15px 18px;
+  position: relative;
+  z-index: 3;
+}
+
+.volume {
+  overflow: hidden;
+  transition: all 500ms;
+  position: absolute;
+  left: 0;
+  padding: 35px;
+}
+
+.controls {
+  margin-left: 40px;
+  width: 100%;
+}
+
+.controls:hover {
+  cursor: pointer;
+}
+
+.next {
+  overflow: hidden;
+  transition: all 500ms;
+  position: relative;
+  left: 0;
+  padding: 10px;
+}
+
+.previous {
+  position: relative;
+  padding: 15px;
+  margin-left: 40px;
+}
+
+.progressbar {
+  margin-left: 10%;
+}
+
+.progressbar input {
+  width: 40%;
+  background: transparent;
+}
+
+.currentTime,
+.totalTime {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 35px;
+  font-size: larger;
+}
+
+.redo {
+  margin-left: 10%;
+}

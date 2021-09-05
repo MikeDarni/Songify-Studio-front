@@ -1,0 +1,14 @@
+.column {
+  width: 65%;
+  height: calc(100% - 25%);
+  padding: 20px;
+  background: #121212;
+  padding-top: 40px;
+  padding-left: 70px;
+  text-transform: capitalize;
+  overflow-y: scroll;
+  overflow: auto;
+  bottom: 15%;
+  position: absolute;
+  left: 15%;
+}

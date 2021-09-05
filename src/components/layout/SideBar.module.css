@@ -1,0 +1,33 @@
+.column {
+  width: 15%;
+  background: #000000;
+  padding-top: 20px;
+  padding-left: 40px;
+  display: block;
+  position: absolute;
+  height: calc(100% - 10%);
+  bottom: 0;
+  white-space: pre-line;
+  overflow-y: scroll;
+  overflow: auto;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  color: burlywood;
+  font-size: large;
+  margin: 5px;
+}
+
+ul li:hover {
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+svg {
+  margin-right: 5px;
+}

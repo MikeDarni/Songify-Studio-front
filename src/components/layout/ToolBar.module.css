@@ -1,0 +1,12 @@
+.column {
+  width: 20%;
+  height: calc(100% - 10%);
+  background: #000000;
+
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  padding-top: 20px;
+  padding-left: 40px;
+}
