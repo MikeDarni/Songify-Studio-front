@@ -1,6 +1,8 @@
 import classes from "./SideBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import PlayerContext from "../../store/player-context";
 
 const DUMMY_DATA = [
   {
@@ -14,6 +16,12 @@ const DUMMY_DATA = [
 ];
 
 function SideBar(props) {
+  const playerCtx = useContext(PlayerContext);
+
+  function songChooseHandler(songName) {
+    playerCtx.setCurrentSong(songName);
+  }
+
   return (
     <div className={classes.column}>
       <h1>Songs list:</h1>
@@ -22,7 +30,11 @@ function SideBar(props) {
           return (
             <li>
               <FontAwesomeIcon icon={faMusic} />
-              <i>
+              <i
+                onClick={() =>
+                  songChooseHandler({ Name: song.name, Author: song.Artist })
+                }
+              >
                 {song.Artist} - {song.name}
               </i>
             </li>
