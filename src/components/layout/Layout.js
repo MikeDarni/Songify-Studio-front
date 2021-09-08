@@ -5,6 +5,8 @@ import ToolBar from "./ToolBar";
 import Content from "./Content";
 import PlayBar from "./PlayBar";
 import { PlayerContextProvider } from "../../store/player-context";
+import { ToolsSettingsProvider } from "../../store/tools-settings-context";
+import { WebAudioProvider } from "../../store/web-Audio-Context";
 
 function Layout(props) {
   return (
@@ -13,8 +15,12 @@ function Layout(props) {
         <MainNavigation />
         <SideBar />
         <Content />
-        <ToolBar />
-        <PlayBar />
+        <ToolsSettingsProvider>
+          <WebAudioProvider>
+            <ToolBar />
+            <PlayBar />
+          </WebAudioProvider>
+        </ToolsSettingsProvider>
       </PlayerContextProvider>
     </div>
   );

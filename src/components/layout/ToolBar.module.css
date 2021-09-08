@@ -10,3 +10,24 @@
   padding-top: 20px;
   padding-left: 40px;
 }
+
+.tools {
+  margin-top: 40px;
+  padding-top: 20%;
+  position: relative;
+  display: block;
+}
+
+.tools input {
+  width: 50%;
+  background: transparent;
+}
+
+.tools button,
+.tools input,
+.tools label {
+  display: block;
+}
+.tools input[type="range"] {
+  width: 100%;
+}

@@ -1,8 +1,9 @@
 import classes from "./PlayBar.module.css";
 import { useState } from "react";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import PlayerContext from "../../store/player-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import WebAudioContext from "../../store/web-Audio-Context";
 import {
   faPlay,
   faStepForward,
@@ -12,6 +13,9 @@ import {
   faRedo,
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
+import ToolsSettingsContext, {
+  ToolsSettingsProvider,
+} from "../../store/tools-settings-context";
 
 const mySong = {
   songUrl:
@@ -26,7 +30,21 @@ function PlayBar(props) {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
+  useEffect(() => {
+    var context = new AudioContext();
+    var source = context.createMediaElementSource(audioRef.current);
+    let filter = context.createBiquadFilter();
+    source.connect(filter);
+    filter.connect(context.destination);
+    filter.type = "lowpass";
+    webAudioCtx.setAudioContext(context);
+    webAudioCtx.setFilter(filter);
+  }, []);
+
   const audioRef = useRef();
+
+  const ToolsCtx = useContext(ToolsSettingsContext);
+  const webAudioCtx = useContext(WebAudioContext);
 
   const fmtMSS = (s) => {
     return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + ~~s;
@@ -63,6 +81,7 @@ function PlayBar(props) {
         ref={audioRef}
         src={mySong.songUrl}
         preload="true"
+        crossOrigin="anonymous"
       />
 
       <div className={classes.controls}>
