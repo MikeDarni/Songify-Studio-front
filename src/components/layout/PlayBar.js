@@ -20,8 +20,6 @@ import ToolsSettingsContext, {
 const mySong = {
   songUrl:
     "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Satin/Kai_Engel_-_09_-_Homeroad.mp3",
-  songUrl2:
-    "http://ulub.pl/Rz8ljhSdke/spatial-vox-incanto-damore-2020-from-italy",
 };
 
 function PlayBar(props) {
@@ -45,6 +43,7 @@ function PlayBar(props) {
 
   const ToolsCtx = useContext(ToolsSettingsContext);
   const webAudioCtx = useContext(WebAudioContext);
+  const playerCtx = useContext(PlayerContext);
 
   const fmtMSS = (s) => {
     return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + ~~s;
@@ -79,9 +78,10 @@ function PlayBar(props) {
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onCanPlay={(e) => setDuration(e.target.duration)}
         ref={audioRef}
-        src={mySong.songUrl}
+        src={playerCtx.song.url}
         preload="true"
         crossOrigin="anonymous"
+        onChange={togglePlayingState}
       />
 
       <div className={classes.controls}>

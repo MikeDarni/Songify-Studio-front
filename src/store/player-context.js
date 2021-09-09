@@ -4,6 +4,7 @@ const PlayerContext = createContext({
   song: {
     Name: "",
     Author: "",
+    url: "",
   },
   setCurrentSong: (songName) => {},
 });
