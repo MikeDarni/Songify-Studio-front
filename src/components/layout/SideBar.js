@@ -62,7 +62,7 @@ function SideBar(props) {
   }
 
   return (
-    <div className={classes.column}>
+    <div className={classes.sidebar}>
       <h1>Songs list:</h1>
       <ul>
         {DUMMY_DATA.map((song) => {

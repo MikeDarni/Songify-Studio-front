@@ -35,7 +35,7 @@ function ToolBar(props) {
   }
 
   return (
-    <div className={classes.column}>
+    <div className={classes.toolbar}>
       <h2>Tools:</h2>
       <div className={classes.tools}>
         <label for="filterVal">Frequency = {toolsCtx.filter.value}</label>

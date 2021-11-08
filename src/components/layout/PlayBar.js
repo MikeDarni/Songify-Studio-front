@@ -73,7 +73,7 @@ function PlayBar(props) {
   }
 
   return (
-    <div className={classes.column}>
+    <div className={classes.playBar}>
       <audio
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onCanPlay={(e) => setDuration(e.target.duration)}

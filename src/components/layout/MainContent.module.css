@@ -1,0 +1,14 @@
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1 1 80%;
+}
+
+.pageContent {
+  background: #121212;
+  overflow-y: scroll;
+  overflow: auto;
+  flex: 1 1 80%;
+}
