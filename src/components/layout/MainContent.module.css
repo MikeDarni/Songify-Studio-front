@@ -4,7 +4,8 @@
   flex-direction: column;
   height: 100%;
   flex: 1 1 80%;
-}
+  align-items: center;
+  }
 
 .pageContent {
   background: #121212;

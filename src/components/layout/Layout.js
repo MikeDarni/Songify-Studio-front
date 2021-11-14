@@ -1,5 +1,5 @@
 import classes from "./Layout.module.css";
-import MainNavigation from "../Layout/MainNavigation";
+import MainNavigation from "../layout/MainNavigation";
 import Content from "./Content";
 import { PlayerContextProvider } from "../../store/player-context";
 import { ToolsSettingsProvider } from "../../store/tools-settings-context";

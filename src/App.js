@@ -1,4 +1,4 @@
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/layout/Layout";
 import { Route, Switch } from "react-router-dom";
 import AllSongsPage from "./pages/AllSongs";
 import NewSongPage from "./pages/NewSong";

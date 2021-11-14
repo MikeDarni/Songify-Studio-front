@@ -13,9 +13,6 @@ function MainNavigation() {
           <li>
             <Link to="/new-song">Add song</Link>
           </li>
-          <li>
-            <Link to="/song-convert">Convert song</Link>
-          </li>
         </ul>
       </nav>
     </header>
