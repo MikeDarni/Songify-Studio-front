@@ -1,8 +1,7 @@
 import classes from "./SideBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
-import { createContext } from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import PlayerContext from "../../store/player-context";
 
 const DUMMY_DATA = [
@@ -19,8 +18,7 @@ const DUMMY_DATA = [
 ];
 
 function SideBar(props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loaddedSongs, setLoadedSongs] = useState([]);
+  const [setIsLoading] = useState(true);
 
   const playerCtx = useContext(PlayerContext);
   /*
@@ -79,7 +77,7 @@ function SideBar(props) {
                 }}
               >
                 {song.Artist} - {song.name}
-              </i>
+             </i>
             </li>
           );
         })}

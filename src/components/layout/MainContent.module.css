@@ -5,10 +5,10 @@
   height: 100%;
   flex: 1 1 80%;
   align-items: center;
+  background-color: rgb(10,10,10);
   }
 
 .pageContent {
-  background: #121212;
   overflow-y: scroll;
   overflow: auto;
   flex: 1 1 80%;

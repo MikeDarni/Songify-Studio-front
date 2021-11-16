@@ -1,4 +1,4 @@
-import SongAddForm from "../UI/SongAddForm";
+import MixerPanel from "../UI/MixerPanel";
 import SideBar from "./SideBar";
 import ToolBar from "./ToolBar";
 import PlayBar from "./PlayBar";
@@ -11,7 +11,7 @@ function Content(props) {
     <div className={classes.content}>
       <SideBar />
       <MainContent>
-        <SongAddForm />
+          <MixerPanel/>
       </MainContent>
       <ToolBar />
     </div>
