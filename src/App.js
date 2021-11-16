@@ -4,7 +4,6 @@ import AllSongsPage from "./pages/AllSongs";
 import NewSongPage from "./pages/NewSong";
 import SongUserMenuPage from "./pages/SongUserMenu";
 import ConvertSongMenuPage from "./pages/ConvertSongMenu";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import "./input.css";
 
 function App() {
