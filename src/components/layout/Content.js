@@ -5,13 +5,14 @@ import PlayBar from "./PlayBar";
 import MainContent from "./MainContent";
 
 import classes from "./Content.module.css";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 function Content(props) {
   return (
     <div className={classes.content}>
       <SideBar />
       <MainContent>
-          <MixerPanel/>
+        <MixerPanel />
       </MainContent>
       <ToolBar />
     </div>
