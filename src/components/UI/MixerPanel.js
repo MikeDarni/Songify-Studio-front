@@ -4,18 +4,12 @@ import MixerForm from "./MixerForm";
 import { potA0VAL } from "../../Lib/console";
 
 function MixerPanel(props) {
-  const connectBoard = () => {
-    console.log(potA0VAL);
-    console.log(typeof potA0VAL);
-  };
-
   return (
     <div style={styledPanelDiv}>
       <MixerForm />
       <div style={styledImage}>
         <img src="mixerbg.jpg" alt="Mixer image " style={styledImageDiv} />
       </div>
-      <button onClick={connectBoard} />
     </div>
   );
 }
@@ -35,4 +29,5 @@ const styledPanelDiv = {
   display: "flex",
   flexDirection: "row",
   padding: "50px",
+  flex: 3,
 };

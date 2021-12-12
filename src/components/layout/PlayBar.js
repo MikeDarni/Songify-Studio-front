@@ -16,6 +16,7 @@ import {
 import ToolsSettingsContext, {
   ToolsSettingsProvider,
 } from "../../store/tools-settings-context";
+import { delayFunc, filterFunc } from "../../Lib/Effects";
 
 const mySong = {
   songUrl:
@@ -28,22 +29,36 @@ function PlayBar(props) {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(() => {
-    var context = new AudioContext();
-    var source = context.createMediaElementSource(audioRef.current);
-    let filter = context.createBiquadFilter();
-    source.connect(filter);
-    filter.connect(context.destination);
-    filter.type = "lowpass";
-    webAudioCtx.setAudioContext(context);
-    webAudioCtx.setFilter(filter);
-  }, []);
-
   const audioRef = useRef();
 
   const ToolsCtx = useContext(ToolsSettingsContext);
   const webAudioCtx = useContext(WebAudioContext);
   const playerCtx = useContext(PlayerContext);
+
+  const checkForAudioContext = () => {
+    if (!webAudioCtx.audioContext) {
+      var context = new AudioContext();
+      var source = context.createMediaElementSource(audioRef.current);
+      // let filter = context.createBiquadFilter();
+      // source.connect(filter);
+      // filter.connect(context.destination);
+      // filter.type = "lowpass";
+      // source.connect(context.destination);
+      filterFunc(context, source);
+      delayFunc(context, source);
+      //// var delay = context.createDelay();
+      ////delay.delayTime.value = 0.8;
+      //var feedback = context.createGain();
+      //feedback.gain.value = 0.2;
+      // delay.connect(feedback);
+      //feedback.connect(delay);
+      //source.connect(delay);
+      ////source.connect(context.destination);
+      ////delay.connect(context.destination);
+      //webAudioCtx.setFilter(filter);
+      webAudioCtx.setAudioContext(context);
+    }
+  };
 
   const fmtMSS = (s) => {
     return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + ~~s;
@@ -68,6 +83,7 @@ function PlayBar(props) {
 
   function togglePlayingState() {
     console.log("Playing state changed");
+    checkForAudioContext();
     setIsPlaying(!isPlaying);
     toggleAudio();
   }
@@ -78,7 +94,7 @@ function PlayBar(props) {
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onCanPlay={(e) => setDuration(e.target.duration)}
         ref={audioRef}
-        src={playerCtx.song.url}
+        src={mySong.songUrl}
         preload="true"
         crossOrigin="anonymous"
         onChange={togglePlayingState}

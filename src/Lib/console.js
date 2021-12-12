@@ -1,8 +1,8 @@
 import { serial } from "./serial";
-import ToolsSettingsContext from "../store/tools-settings-context";
 
 export var port;
-export var potA0VAL;
+export var potVal;
+export var potName;
 
 (function () {
   "use strict";
@@ -13,14 +13,16 @@ export var potA0VAL;
     function connect() {
       port.connect().then(
         () => {
-          console.log(port);
           console.log("Connected");
           connectButton.textContent = "Disconnect";
           port.onReceive = (data) => {
             let textDecoder = new TextDecoder();
-            console.log(textDecoder.decode(data));
-            potA0VAL = textDecoder.decode(data);
-            potA0VAL = parseInt(potA0VAL);
+            let textVal = textDecoder.decode(data);
+            let decodedPotName = textVal.slice(0, 5);
+            //  console.log("Pot name:", potName);
+            potName = decodedPotName;
+            potVal = parseInt(textVal.slice(3));
+            // console.log("POT VAL:", potVal);
           };
           port.onReceiveError = (error) => {
             console.log("Recevied error" + error);

@@ -6,19 +6,28 @@ const PlayerContext = createContext({
     Author: "",
     url: "",
   },
+  config: [],
   setCurrentSong: (songName) => {},
+  setMixerConfig: (config) => {},
 });
 
 export function PlayerContextProvider(props) {
   const [currentSong, setCurrentSong] = useState({});
+  const [mixerConfig, setCurrentMixerConfig] = useState([]);
 
   function setCurrentSongHandler(song) {
     setCurrentSong(song);
   }
 
+  function setMixerConfigHandler(config) {
+    setCurrentMixerConfig(config);
+  }
+
   const context = {
     song: currentSong,
+    config: mixerConfig,
     setCurrentSong: setCurrentSongHandler,
+    setMixerConfig: setMixerConfigHandler,
   };
 
   return (

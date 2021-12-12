@@ -26,10 +26,6 @@ export function WebAudioProvider(props) {
     setAudioContext: setCurrentAudioContext,
   };
 
-  useEffect(() => {
-    setAudioContext(new AudioContext());
-  }, []);
-
   return (
     <WebAudioContext.Provider value={context}>
       {props.children}
