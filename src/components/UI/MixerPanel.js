@@ -1,14 +1,11 @@
-import { serial } from "../../Lib/serial";
-import { port } from "../../Lib/console";
 import MixerForm from "./MixerForm";
-import { potA0VAL } from "../../Lib/console";
 
 function MixerPanel(props) {
   return (
     <div style={styledPanelDiv}>
       <MixerForm />
       <div style={styledImage}>
-        <img src="mixerbg.jpg" alt="Mixer image " style={styledImageDiv} />
+        <img src="mixerbg.png" alt="Mixer image " style={styledImageDiv} />
       </div>
     </div>
   );

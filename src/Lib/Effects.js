@@ -25,7 +25,7 @@ export const filterFunc = (context, source) => {
   source.connect(filter);
   filter.connect(context.destination);
   filter.type = "lowpass";
-  source.connect(context.destination);
+  filter.frequency.value = 0;
 };
 
 export const filterChangeHandler = (newValue, webAudioCtx) => {

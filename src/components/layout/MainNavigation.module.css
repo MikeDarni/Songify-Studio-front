@@ -4,14 +4,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #151516;
+  background-color: #2c2c2c;
   padding: 0 10%;
-  border-bottom: 3px solid rgb(252, 243, 191);
+  border-bottom: 3px solid rgb(92, 92, 92);
 }
 
 .logo {
   font-size: 2rem;
-  color: rgb(253, 235, 129);
+  color: rgb(250, 216, 124);
   font-weight: bold;
 }
 

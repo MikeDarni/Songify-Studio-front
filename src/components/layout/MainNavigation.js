@@ -8,10 +8,7 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Songs list</Link>
-          </li>
-          <li>
-            <Link to="/new-song">Add song</Link>
+            <Link to="/new-song">Dodaj utwór</Link>
           </li>
         </ul>
       </nav>

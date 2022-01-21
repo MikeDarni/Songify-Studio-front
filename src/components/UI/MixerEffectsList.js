@@ -1,7 +1,6 @@
 import { ListGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
 import { effectsNameList } from "../../Lib/Effects";
 import { useState, useContext } from "react";
-import PlayerContext from "../../store/player-context";
 
 const mixerElements = [
   { name: "POT 0" },
@@ -13,10 +12,9 @@ const mixerElements = [
 
 function MixerEffectsList(props) {
   const [selectionList, setSelectionList] = useState([]);
-  const playerContext = useContext(PlayerContext);
 
   const submitSelectionHandler = () => {
-    playerContext.setMixerConfig(selectionList);
+    // playerContext.setMixerConfig(selectionList);
   };
 
   const wrapListElement = (mixerEle, effectList, index) => {
@@ -41,7 +39,7 @@ function MixerEffectsList(props) {
     };
 
     return (
-      <ListGroup.Item variant="dark" key={index}>
+      <ListGroup.Item variant="dark" key={index} style={optionListStyle}>
         {mixerEle.name}
         <Form.Select
           title={"Wybierz efekt"}
@@ -78,5 +76,9 @@ const styledEffectsList = {
 
 const styledButton = {
   marginTop: "20px",
-  backgroundColor: "rgb(52, 232, 235)",
+  backgroundColor: "rgb(245, 255, 240)",
+};
+
+const optionListStyle = {
+  backgroundColor: "rgb(216, 216, 193)",
 };

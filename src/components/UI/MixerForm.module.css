@@ -2,7 +2,7 @@
   height: 400px;
   width: 200px;
   display: block;
-  background-color: rgb(218, 216, 216);
+  background-color: rgb(216, 216, 193);
   border-radius: 20px;
   margin-right: 50px;
 }
@@ -10,7 +10,7 @@
 .effectsHeader {
   height: 10%;
   width: 100%;
-  background-color: rgb(153, 153, 153);
+  background-color: rgb(97, 97, 97);
   color: white;
   border-radius: 10px;
   text-align: center;

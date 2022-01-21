@@ -1,9 +1,7 @@
 import classes from "./PlayBar.module.css";
 import { useState } from "react";
-import { useContext, useRef, useEffect } from "react";
-import PlayerContext from "../../store/player-context";
+import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import WebAudioContext from "../../store/web-Audio-Context";
 import {
   faPlay,
   faStepForward,
@@ -13,53 +11,51 @@ import {
   faRedo,
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
-import ToolsSettingsContext, {
-  ToolsSettingsProvider,
-} from "../../store/tools-settings-context";
+import { useSelector, useDispatch } from "react-redux";
 import { delayFunc, filterFunc } from "../../Lib/Effects";
+import changeCtx from "../../store/webAudioSlice";
 
-const mySong = {
-  songUrl:
-    "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Satin/Kai_Engel_-_09_-_Homeroad.mp3",
-};
+var context = new AudioContext();
+var source = null;
 
 function PlayBar(props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setMuteState] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [context, setContext] = useState(null);
 
   const audioRef = useRef();
+  const dispatch = useDispatch();
+  const currentSongUrl = useSelector((state) => state.mySongReducer.song.url);
+  const webAudioCtx = useSelector(
+    (state) => state.myWebAudioReducer.webAudioContext
+  );
 
-  const ToolsCtx = useContext(ToolsSettingsContext);
-  const webAudioCtx = useContext(WebAudioContext);
-  const playerCtx = useContext(PlayerContext);
+  // useEffect(() => {
+  //   var ctx = new AudioContext();
+  //   var source = ctx.createMediaElementSource(audioRef.current);
+  //   //filterFunc(webAudioCtx, source);
+  //   console.log("PlayBar render!");
+  //   source.connect(ctx.destination);
+  // }, []);
 
-  const checkForAudioContext = () => {
-    if (!webAudioCtx.audioContext) {
-      var context = new AudioContext();
-      var source = context.createMediaElementSource(audioRef.current);
-      // let filter = context.createBiquadFilter();
-      // source.connect(filter);
-      // filter.connect(context.destination);
-      // filter.type = "lowpass";
-      // source.connect(context.destination);
-      filterFunc(context, source);
-      delayFunc(context, source);
-      //// var delay = context.createDelay();
-      ////delay.delayTime.value = 0.8;
-      //var feedback = context.createGain();
-      //feedback.gain.value = 0.2;
-      // delay.connect(feedback);
-      //feedback.connect(delay);
-      //source.connect(delay);
-      ////source.connect(context.destination);
-      ////delay.connect(context.destination);
-      //webAudioCtx.setFilter(filter);
-      webAudioCtx.setAudioContext(context);
-    }
-  };
-
+  // let filter = context.createBiquadFilter();
+  // source.connect(filter);
+  // filter.connect(context.destination);
+  // filter.type = "lowpass";
+  // source.connect(context.destination);
+  //// var delay = context.createDelay();
+  ////delay.delayTime.value = 0.8;
+  //var feedback = context.createGain();
+  //feedback.gain.value = 0.2;
+  // delay.connect(feedback);
+  //feedback.connect(delay);
+  //source.connect(delay);
+  ////source.connect(context.destination);
+  ////delay.connect(context.destination);
+  //webAudioCtx.setFilter(filter);
+  // webAudioCtx.setAudioContext(context);
   const fmtMSS = (s) => {
     return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + ~~s;
   };
@@ -83,7 +79,14 @@ function PlayBar(props) {
 
   function togglePlayingState() {
     console.log("Playing state changed");
-    checkForAudioContext();
+    var ctx = new AudioContext();
+    setContext(ctx);
+    if (!source) {
+      source = ctx.createMediaElementSource(audioRef.current);
+      filterFunc(ctx, source);
+      delayFunc(ctx, source);
+      source.connect(ctx.destination);
+    }
     setIsPlaying(!isPlaying);
     toggleAudio();
   }
@@ -94,7 +97,7 @@ function PlayBar(props) {
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onCanPlay={(e) => setDuration(e.target.duration)}
         ref={audioRef}
-        src={mySong.songUrl}
+        src={currentSongUrl}
         preload="true"
         crossOrigin="anonymous"
         onChange={togglePlayingState}
