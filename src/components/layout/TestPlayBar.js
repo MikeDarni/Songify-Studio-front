@@ -12,15 +12,15 @@ import {
   faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { delayFunc, filterFunc } from "../../Lib/Effects";
-import changeCtx from "../../store/webAudioSlice";
-import { change } from "../../store/songSlice";
+import { Button } from "react-bootstrap";
+import { Player } from "./Player";
 import { deleteSong } from "../../store/playlistSlice";
 
-var context = new AudioContext();
-var source = null;
+var myContext;
+var myBuffer;
+var player;
 
-function PlayBar(props) {
+function TestPlayBar(props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setMuteState] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -29,7 +29,7 @@ function PlayBar(props) {
 
   const audioRef = useRef();
   const dispatch = useDispatch();
-  const currenSongId = useSelector((state) => state.song.id);
+  const currentSongId = useSelector((state) => state.mySongReducer.song.id);
   const currentSongUrl = useSelector((state) => state.mySongReducer.song.url);
   const currentPlayList = useSelector((state) => state.myPlayListReducer.songs);
 
@@ -40,51 +40,39 @@ function PlayBar(props) {
     (state) => state.myWebAudioReducer.webAudioContext
   );
 
-  useEffect(() => {
-    if (currentPlayList.length > 0 && isPlayListReady) {
-      // dispatch(change(currentPlayList[0]));
-      // dispatch(deleteSong());
-    }
-  }, [isPlayListReady]);
-
-  const fmtMSS = (s) => {
-    return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + ~~s;
+  const initializeHandler = () => {
+    myContext = new AudioContext();
+    const url = "https://localhost:44306/api/File?songId=";
+    player = new Player(myContext, currentPlayList);
+    player.loadTrack(url);
+    player.play();
   };
 
-  function toggleAudio() {
-    audioRef.current.paused
-      ? audioRef.current.play()
-      : audioRef.current.pause();
-  }
+  const volumeHander = () => {
+    player.volumeUp();
+  };
 
-  function toggleMute() {
-    setMuteState(!isMuted);
-    audioRef.current.muted = !audioRef.current.muted;
-  }
+  const fmtMSS = (s) => {};
 
-  function handleProgress(event) {
-    let compute = (event.target.value * duration) / 100;
-    setCurrentTime(compute);
-    audioRef.current.currentTime = compute;
-  }
+  function toggleAudio() {}
+
+  function toggleMute() {}
+
+  function handleProgress(event) {}
 
   function togglePlayingState() {
-    console.log("Playing state changed");
-    var ctx = new AudioContext();
-    setContext(ctx);
-    if (!source) {
-      source = ctx.createMediaElementSource(audioRef.current);
-      //filterFunc(ctx, source);
-      //delayFunc(ctx, source);
-      source.connect(ctx.destination);
+    if (!isPlaying) {
+      setIsPlaying(true);
+      player.resume();
+    } else {
+      setIsPlaying(false);
+      player.stop(0);
     }
-    setIsPlaying(!isPlaying);
-    toggleAudio();
   }
 
   return (
     <div className={classes.playBar}>
-      <audio
+      {/* <audio
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onCanPlay={(e) => setDuration(e.target.duration)}
         ref={audioRef}
@@ -92,9 +80,10 @@ function PlayBar(props) {
         preload="true"
         crossOrigin="anonymous"
         onChange={togglePlayingState}
-      />
+      /> */}
 
       <div className={classes.controls}>
+        <Button onClick={initializeHandler}>Rozpocznij!</Button>
         <span className={classes.volume} onClick={toggleMute}>
           {isMuted ? (
             <FontAwesomeIcon icon={faVolumeMute} size="2x" color="White" />
@@ -125,6 +114,7 @@ function PlayBar(props) {
         <span className={classes.next}>
           <FontAwesomeIcon icon={faStepForward} size="3x" color="White" />
         </span>
+        <button onClick={volumeHander}>Podgłos!</button>
 
         <span className={classes.progressbar}>
           <span className={classes.currentTime}>{fmtMSS(currentTime)}</span>
@@ -145,4 +135,4 @@ function PlayBar(props) {
   );
 }
 
-export default PlayBar;
+export default TestPlayBar;

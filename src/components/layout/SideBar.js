@@ -4,8 +4,10 @@ import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { change } from "../../store/songSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { addSong } from "../../store/playlistSlice";
+import { setPlayList } from "../../store/playlistSlice";
 
-const DUMMY_DATA = [
+export const DUMMY_DATA = [
   {
     name: "The Darkest Night",
     Artist: "Boris Brejcha",
@@ -23,8 +25,6 @@ function SideBar(props) {
   const [loadedSongs, setLoadedSongs] = useState([]);
 
   const dispatch = useDispatch();
-  const currentSong = useSelector((state) => state.mySongReducer.song.url);
-
   useEffect(() => {
     setIsLoading(true);
     fetch("https://localhost:44306/api/Songs")
@@ -53,12 +53,13 @@ function SideBar(props) {
 
   function songChooseHandler(song) {
     console.log(song);
+    dispatch(addSong(song));
     dispatch(change(song));
   }
 
   return (
     <div className={classes.sidebar}>
-      <h1>Lista utworów:</h1>
+      <h3>Dostępne piosenki:</h3>
       <ul>
         {loadedSongs.map((song, index) => {
           return (
@@ -69,7 +70,7 @@ function SideBar(props) {
                   songChooseHandler({
                     Name: song.name,
                     Author: song.author,
-                    url: song.songURL,
+                    id: song.id,
                   });
                 }}
               >

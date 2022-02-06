@@ -4,9 +4,9 @@ export const songSlice = createSlice({
   name: "songSlice",
   initialState: {
     song: {
-      url: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Satin/Kai_Engel_-_09_-_Homeroad.mp3",
+      id: 0,
       Author: "",
-      songName: "",
+      Name: "",
     },
   },
   reducers: {
@@ -15,11 +15,9 @@ export const songSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      console.log(state);
-      console.log(action);
-      state.song.url = action.payload.url;
+      state.song.id = action.payload.id;
       state.song.Author = action.payload.Author;
-      state.song.songName = action.payload.Name;
+      state.song.Name = action.payload.Name;
     },
   },
 });

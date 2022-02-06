@@ -4,7 +4,9 @@ import classes from "./MainNavigation.module.css";
 function MainNavigation() {
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>Songify Studio v1</div>
+      <Link to="/">
+        <div className={classes.logo}>Songify Studio v1</div>
+      </Link>
       <nav>
         <ul>
           <li>

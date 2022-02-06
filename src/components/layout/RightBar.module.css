@@ -1,0 +1,30 @@
+.rightbar {
+  width: 15%;
+  background: #5a5a5a;
+  display: block;
+}
+
+.barTitle {
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  color: burlywood;
+  font-size: large;
+  margin: 5px;
+}
+
+ul li:hover {
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+svg {
+  margin-right: 5px;
+}

@@ -1,46 +1,57 @@
 import classes from "./SongAddForm.module.css";
 import { useContext, useRef } from "react";
-import PlayerContext from "../../store/player-context";
+import { Form, Button } from "react-bootstrap";
+import { getByTitle } from "@testing-library/react";
 
 function SongAddForm(props) {
-  const playerCtx = useContext(PlayerContext);
-
-  const songUrlInputRef = useRef();
+  const songFileInputRef = useRef();
   const titleInputRef = useRef();
   const authorInputRef = useRef();
 
   function submitHandler(event) {
     event.preventDefault();
-    playerCtx.setCurrentSong({
-      Name: titleInputRef.current.value,
-      Author: authorInputRef.current.value,
-      url: songUrlInputRef.current.value,
+    postFileHandler();
+  }
+
+  async function postFileHandler() {
+    const formData = new FormData();
+    const url = "https://localhost:44306/api/Songs";
+    formData.append("File", songFileInputRef.current.files[0]);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        name: titleInputRef.current.value,
+        author: authorInputRef.current.value,
+        genre: 2,
+      },
+      body: formData,
     });
+    console.log(response);
   }
 
   return (
-    <div className={classes.songAddForm}>
-      <h4>{playerCtx.song.Author}</h4>
-      <h1>{playerCtx.song.Name}</h1>
-
-      <form className={classes.form} onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="title">Song title:</label>
-          <input type="text" required id="title" ref={titleInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="Author">Author:</label>
-          <input type="text" required id="Author" ref={authorInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="song">URL:</label>
-          <input type="url" required id="song" ref={songUrlInputRef} />
-        </div>
-        <div className={classes.actions}>
-          <button>Add song</button>
-        </div>
-      </form>
-    </div>
+    <Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Nazwa piosenki</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Wpisz nazwe"
+          ref={titleInputRef}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Autor</Form.Label>
+        <Form.Control type="text" ref={authorInputRef} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Plik mp3</Form.Label>
+        <Form.Control type="file" ref={songFileInputRef} />
+      </Form.Group>
+      <Form.Group></Form.Group>
+      <Button variant="primary" type="submit" onClick={submitHandler}>
+        Submit
+      </Button>
+    </Form>
   );
 }
 
