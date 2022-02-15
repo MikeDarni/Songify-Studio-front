@@ -1,6 +1,15 @@
-import { ListGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
+import {
+  ListGroup,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { effectsNameList } from "../../Lib/Effects";
 import { useState, useContext } from "react";
+import { playbarInitializeHandler } from "../layout/TestPlayBar";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const mixerElements = [
   { name: "POT 0" },
@@ -12,9 +21,24 @@ const mixerElements = [
 
 function MixerEffectsList(props) {
   const [selectionList, setSelectionList] = useState([]);
+  const [isMixerConfigured, setMixerConfiguration] = useState(false);
 
+  const isPlaylistReady = useSelector(
+    (state) => state.myPlayListReducer.isReady
+  );
   const submitSelectionHandler = () => {
     // playerContext.setMixerConfig(selectionList);
+  };
+
+  const confirmButtonHandler = () => {
+    if (isPlaylistReady) {
+      setMixerConfiguration(true);
+      playbarInitializeHandler();
+    }
+    // Inicjalizacja playbar'a
+    else {
+      toast.error("Przed rozpoczęciem zatwierdź listę piosenek!");
+    }
   };
 
   const wrapListElement = (mixerEle, effectList, index) => {
@@ -60,9 +84,15 @@ function MixerEffectsList(props) {
       {mixerElements.map((mixEle, index) =>
         wrapListElement(mixEle, effectsNameList, index)
       )}
-      <button style={styledButton} onClick={submitSelectionHandler}>
-        Zatwierdź
-      </button>
+      {!isMixerConfigured && (
+        <Button
+          onClick={confirmButtonHandler}
+          variant="primary"
+          style={styledButton}
+        >
+          Rozpocznij!
+        </Button>
+      )}
     </ListGroup>
   );
 }
@@ -76,9 +106,8 @@ const styledEffectsList = {
 
 const styledButton = {
   marginTop: "20px",
-  backgroundColor: "rgb(245, 255, 240)",
 };
 
 const optionListStyle = {
-  backgroundColor: "rgb(216, 216, 193)",
+  backgroundColor: "rgb(165,165,165 )",
 };

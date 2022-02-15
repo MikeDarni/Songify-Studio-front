@@ -1,11 +1,12 @@
 import MixerPanel from "../UI/MixerPanel";
 import SideBar from "./SideBar";
-import TestPlayBar from "./TestPlayBar";
+import { TestPlayBar } from "./TestPlayBar";
 import MainContent from "./MainContent";
 import classes from "./Content.module.css";
 import RightBar from "./RightBar";
 import { Route, Switch } from "react-router-dom";
 import SongAddForm from "../UI/SongAddForm";
+import { ToastContainer } from "react-toastify";
 
 function Content(props) {
   return (
@@ -19,7 +20,7 @@ function Content(props) {
         </Route>
         <Route path="/">
           <MainContent>
-            {/* <MixerPanel /> */}
+            <MixerPanel />
             {/* {playerCtx.config.length > 0 && <PlayBar />} */}
             <TestPlayBar />
             {/* {<ToolBar></ToolBar>} */}
@@ -27,6 +28,7 @@ function Content(props) {
           <RightBar />
         </Route>
       </Switch>
+      <ToastContainer />
       {/*} <ToolBar /> */}
     </div>
   );

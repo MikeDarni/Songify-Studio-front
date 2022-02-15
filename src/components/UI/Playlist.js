@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import classes from "./Playlist.module.css";
+import store from "../../store/store";
+import { toast } from "react-toastify";
 
 function PlayList(props) {
   const dispatch = useDispatch();
@@ -26,8 +28,12 @@ function PlayList(props) {
   }
 
   function setPlaylistReadyHandler() {
-    setPlaylistReady(true);
-    dispatch(setReady());
+    if (currentPlayList.length < 3) {
+      toast.info("Wybierz więcej piosenek! (min.3)");
+    } else {
+      setPlaylistReady(true);
+      dispatch(setReady());
+    }
   }
 
   function wrapPlayListElement(song) {

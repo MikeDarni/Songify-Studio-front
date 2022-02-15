@@ -73,29 +73,6 @@ export class Player {
     }
   }
 
-  // next() {
-  //   this.songsBuffer.shift();
-  //   this.source = new AudioBufferSourceNode(this.context, {
-  //     buffer: this.songsBuffer[0],
-  //   });
-  //   this.source.onended = function () {
-  //     store.dispatch(deleteSong());
-  //     this.songsBuffer.shift();
-  //     this.next();
-  //     // if (this.playlist.length > 0) {
-  //     //   this.playlist.shift();
-  //     //   this.songsBuffer.shift();
-  //     //   console.log(this.songsBuffer);
-  //     // }
-  //   };
-  //   this.source.connect(this.sourceGain);
-  //   this.sourceGain.gain.value = 0.5;
-  //   this.sourceGain.connect(this.context.destination);
-  //   if (this.isPlaying) {
-  //     this.source.start(0);
-  //   }
-  // }
-
   volumeUp() {
     this.sourceGain.gain.value += 0.5;
   }

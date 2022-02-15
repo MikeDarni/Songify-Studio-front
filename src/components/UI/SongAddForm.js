@@ -30,28 +30,30 @@ function SongAddForm(props) {
   }
 
   return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Nazwa piosenki</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Wpisz nazwe"
-          ref={titleInputRef}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Autor</Form.Label>
-        <Form.Control type="text" ref={authorInputRef} />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Plik mp3</Form.Label>
-        <Form.Control type="file" ref={songFileInputRef} />
-      </Form.Group>
-      <Form.Group></Form.Group>
-      <Button variant="primary" type="submit" onClick={submitHandler}>
-        Submit
-      </Button>
-    </Form>
+    <div className={classes.formBg}>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Nazwa piosenki</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Wpisz nazwe"
+            ref={titleInputRef}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Autor</Form.Label>
+          <Form.Control type="text" ref={authorInputRef} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Plik mp3</Form.Label>
+          <Form.Control type="file" ref={songFileInputRef} />
+        </Form.Group>
+        <Form.Group></Form.Group>
+        <Button variant="primary" type="submit" onClick={submitHandler}>
+          Submit
+        </Button>
+      </Form>
+    </div>
   );
 }
 

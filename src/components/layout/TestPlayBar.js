@@ -15,42 +15,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
 import { Player } from "./Player";
 import { deleteSong } from "../../store/playlistSlice";
+import store from "../../store/store";
+import { current } from "@reduxjs/toolkit";
 
 var myContext;
 var myBuffer;
-var player;
+export var player;
 
-function TestPlayBar(props) {
+export const playbarInitializeHandler = () => {
+  myContext = new AudioContext();
+  const url = "https://localhost:44306/api/File?songId=";
+  var currentPlayList = store.getState().myPlayListReducer.songs;
+  player = new Player(myContext, currentPlayList);
+  player.loadTrack(url);
+  player.play();
+};
+
+export function TestPlayBar(props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setMuteState] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [context, setContext] = useState(null);
 
   const audioRef = useRef();
   const dispatch = useDispatch();
-  const currentSongId = useSelector((state) => state.mySongReducer.song.id);
-  const currentSongUrl = useSelector((state) => state.mySongReducer.song.url);
   const currentPlayList = useSelector((state) => state.myPlayListReducer.songs);
-
-  const isPlayListReady = useSelector(
-    (state) => state.myPlayListReducer.isReady
-  );
-  const webAudioCtx = useSelector(
-    (state) => state.myWebAudioReducer.webAudioContext
-  );
-
-  const initializeHandler = () => {
-    myContext = new AudioContext();
-    const url = "https://localhost:44306/api/File?songId=";
-    player = new Player(myContext, currentPlayList);
-    player.loadTrack(url);
-    player.play();
-  };
-
-  const volumeHander = () => {
-    player.volumeUp();
-  };
 
   const fmtMSS = (s) => {};
 
@@ -83,7 +72,6 @@ function TestPlayBar(props) {
       /> */}
 
       <div className={classes.controls}>
-        <Button onClick={initializeHandler}>Rozpocznij!</Button>
         <span className={classes.volume} onClick={toggleMute}>
           {isMuted ? (
             <FontAwesomeIcon icon={faVolumeMute} size="2x" color="White" />
@@ -114,7 +102,6 @@ function TestPlayBar(props) {
         <span className={classes.next}>
           <FontAwesomeIcon icon={faStepForward} size="3x" color="White" />
         </span>
-        <button onClick={volumeHander}>Podgłos!</button>
 
         <span className={classes.progressbar}>
           <span className={classes.currentTime}>{fmtMSS(currentTime)}</span>
@@ -134,5 +121,3 @@ function TestPlayBar(props) {
     </div>
   );
 }
-
-export default TestPlayBar;

@@ -1,3 +1,10 @@
+.formBg {
+  margin-top: 5%;
+  background-color: rgb(85, 85, 85);
+  padding: 100px;
+  border-radius: 20px;
+}
+
 .songAddForm {
   padding-top: 40px;
   padding-left: 70px;

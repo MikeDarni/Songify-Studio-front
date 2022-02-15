@@ -6,9 +6,7 @@
   text-transform: capitalize;
   text-align: center;
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  flex: 1;
+  display: inline-block;
 }
 
 .play {
