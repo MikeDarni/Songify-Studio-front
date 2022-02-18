@@ -1,5 +1,6 @@
 import { serial } from "./serial";
 import { player } from "../components/layout/TestPlayBar";
+import { consoleValueReadHandler } from "../components/layout/TestPlayBar";
 
 export var port;
 export var potVal;
@@ -18,14 +19,12 @@ export var potName;
           port.onReceive = (data) => {
             let textDecoder = new TextDecoder();
             let textVal = textDecoder.decode(data);
-            let decodedPotName = textVal.slice(0, 5);
-            console.log("Pot name:", potName);
-            if (potName === "MUTE") {
-              player.volumeUp();
-            }
-            potName = decodedPotName;
-            potVal = parseInt(textVal.slice(3));
-            // console.log("POT VAL:", potVal);
+            console.log(textVal);
+            console.log(textVal.substring(0, textVal.indexOf("#")));
+            potName = textVal.substring(0, textVal.indexOf("#"));
+            potVal = textVal.substring(textVal.indexOf("#") + 1);
+
+            consoleValueReadHandler({ name: potName, value: potVal });
           };
           port.onReceiveError = (error) => {
             console.log("Recevied error" + error);

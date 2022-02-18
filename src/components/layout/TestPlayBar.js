@@ -14,29 +14,43 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
 import { Player } from "./Player";
-import { deleteSong } from "../../store/playlistSlice";
 import store from "../../store/store";
-import { current } from "@reduxjs/toolkit";
 
 var myContext;
 var myBuffer;
 export var player;
 
-export const playbarInitializeHandler = () => {
+var playingStateHandler;
+var togglePlayingStateHandler;
+
+export const playbarInitializeHandler = (consoleConfig) => {
   myContext = new AudioContext();
   const url = "https://localhost:44306/api/File?songId=";
   var currentPlayList = store.getState().myPlayListReducer.songs;
-  player = new Player(myContext, currentPlayList);
+  player = new Player(myContext, currentPlayList, consoleConfig);
   player.loadTrack(url);
   player.play();
 };
 
+export const consoleValueReadHandler = (potState) => {
+  if (potState.name === "MUTE") {
+    console.log("MUTE BUTTON CLICKED");
+    togglePlayingStateHandler();
+  } else if (potState.name === "ON_OFF") {
+    console.log("ON_OFF BUTTON CLICKED");
+    playingStateHandler();
+  } else {
+    player.changeEffectValue(potState);
+  }
+};
+
 export function TestPlayBar(props) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setMuteState] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-
+  togglePlayingStateHandler = togglePlayingState;
+  playingStateHandler = FadeOutTest;
   const audioRef = useRef();
   const dispatch = useDispatch();
   const currentPlayList = useSelector((state) => state.myPlayListReducer.songs);
@@ -59,6 +73,20 @@ export function TestPlayBar(props) {
     }
   }
 
+  function FadeOutTest() {
+    player.sourceGain.gain.linearRampToValueAtTime(
+      0,
+      myContext.currentTime + 5
+    );
+  }
+
+  function FadeInTest() {
+    player.sourceGain.gain.linearRampToValueAtTime(
+      1,
+      myContext.currentTime + 5
+    );
+  }
+
   return (
     <div className={classes.playBar}>
       {/* <audio
@@ -70,7 +98,6 @@ export function TestPlayBar(props) {
         crossOrigin="anonymous"
         onChange={togglePlayingState}
       /> */}
-
       <div className={classes.controls}>
         <span className={classes.volume} onClick={toggleMute}>
           {isMuted ? (

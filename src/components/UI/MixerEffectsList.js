@@ -13,10 +13,10 @@ import { toast } from "react-toastify";
 
 const mixerElements = [
   { name: "POT 0" },
-  { name: "POT 1" },
   { name: "POT 2" },
   { name: "POT 3" },
   { name: "POT 4" },
+  { name: "POT 5" },
 ];
 
 function MixerEffectsList(props) {
@@ -26,14 +26,11 @@ function MixerEffectsList(props) {
   const isPlaylistReady = useSelector(
     (state) => state.myPlayListReducer.isReady
   );
-  const submitSelectionHandler = () => {
-    // playerContext.setMixerConfig(selectionList);
-  };
 
   const confirmButtonHandler = () => {
     if (isPlaylistReady) {
       setMixerConfiguration(true);
-      playbarInitializeHandler();
+      playbarInitializeHandler(selectionList);
     }
     // Inicjalizacja playbar'a
     else {
@@ -59,7 +56,6 @@ function MixerEffectsList(props) {
       if (!repetitionFlag) {
         selectionList.push(currentSelection);
       }
-      console.log(selectionList);
     };
 
     return (
